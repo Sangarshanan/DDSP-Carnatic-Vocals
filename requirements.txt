@@ -1,0 +1,8 @@
+torch
+torchaudio
+torchcrepe
+numpy
+gradio
+matplotlib
+ipython
+jupyter

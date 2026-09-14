@@ -1,0 +1,6 @@
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+.gradio/
+.DS_Store
+blog.md
