@@ -37,7 +37,7 @@ python app.py
 
 A bit of how the interface looks like, Inference should be pretty fast.
 
-![alt text](https://github.com/Sangarshanan/DDSP-Carnatic-Vocals/blob/master/output/gradio.png "Gradio")
+![alt text](https://github.com/Sangarshanan/DDSP-Carnatic-Vocals/blob/main/output/gradio.png "Gradio")
 
 
 ### Training the model
