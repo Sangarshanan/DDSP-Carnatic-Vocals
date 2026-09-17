@@ -1,7 +1,7 @@
 import torch
+import torchaudio
 import torch.nn as nn
 import torch.nn.functional as F
-import torchaudio
 
 
 class DDSPEncoder(nn.Module):

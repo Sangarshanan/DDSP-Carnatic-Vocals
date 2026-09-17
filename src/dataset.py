@@ -1,18 +1,16 @@
 import os
 import glob
-import numpy as np
 import torch
 import torchaudio
 import torchcrepe
+import numpy as np
 import torchaudio.functional as AF
 from torch.utils.data import Dataset
 
 
 SAMPLE_RATE = 16000
 HOP_LENGTH = 256  # 16ms frames
-CHUNK_SECONDS = (
-    4.0  # short crops
-)
+CHUNK_SECONDS = 4.0
 FMIN, FMAX = (
     80.0,
     1000.0,
@@ -20,9 +18,8 @@ FMIN, FMAX = (
 
 
 def _extract_f0(waveform: torch.Tensor, sr: int, hop_length: int, device: str = "cpu"):
-    """Run CREPE once over a full clip; returns (f0_hz, periodicity) per analysis frame.
-    
-    So f0 is estimated up front instead of being predicted by the network.
+    """
+    Run CREPE once over a full clip; returns (f0_hz, periodicity) per analysis frame.
     """
     audio = waveform.unsqueeze(0).to(device)  # (1, T)
     f0, periodicity = torchcrepe.predict(
@@ -36,7 +33,7 @@ def _extract_f0(waveform: torch.Tensor, sr: int, hop_length: int, device: str = 
         device=device,
         return_periodicity=True,
     )
-    # Smooth the f0 curves to reduce frame-to-frame jitter
+    # Smooth the f0 curves to reduce frame to frame jitter
     periodicity = torchcrepe.filter.median(periodicity, 3)
     f0 = torchcrepe.filter.mean(f0, 3)
     return f0.squeeze(0).cpu().numpy(), periodicity.squeeze(0).cpu().numpy()
@@ -59,7 +56,7 @@ class CarnaticDataset(Dataset):
         self.target_length = int(sample_rate * duration)
         self.device = device
 
-        # Cached CREPE f0/periodicity per file so it's only computed once, not every epoch.
+        # Cached so it's only computed once and not every epoch.
         self.cache_dir = cache_dir or os.path.join(data_dir, ".f0_cache")
         os.makedirs(self.cache_dir, exist_ok=True)
 

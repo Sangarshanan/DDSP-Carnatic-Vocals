@@ -1,12 +1,12 @@
 import os
 import torch
+import torchaudio
 import torch.optim as optim
 from torch.utils.data import DataLoader
-import torchaudio
 
-from dataset import CarnaticDataset, SAMPLE_RATE, HOP_LENGTH, CHUNK_SECONDS
-from encoder import DDSPEncoder
 from synth import DDSPSynth
+from encoder import DDSPEncoder
+from dataset import CarnaticDataset, SAMPLE_RATE, HOP_LENGTH, CHUNK_SECONDS
 
 
 def _spectral_loss(

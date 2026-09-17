@@ -47,7 +47,7 @@ class HarmonicOscillator(nn.Module):
             1, 1, -1
         )  # (B, T, n_harmonics)
 
-        # Anti-alias: zero out (and renormalize away) partials above Nyquist.
+        # Anti-alias: zero out partials above Nyquist.
         anti_alias_mask = (harmonic_freqs < (self.sample_rate / 2.0)).to(dist_up.dtype)
         dist_up = dist_up * anti_alias_mask
         dist_up = dist_up / dist_up.sum(dim=-1, keepdim=True).clamp(min=1e-7)
